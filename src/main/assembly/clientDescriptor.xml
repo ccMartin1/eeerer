@@ -1,0 +1,42 @@
+<assembly>
+  <id>client</id>
+  <formats>
+    <format>jar</format>
+  </formats>
+  
+  <includeBaseDirectory>false</includeBaseDirectory>
+  
+  <fileSets>
+    
+    <fileSet>
+      <directory>target/classes/mx/com/vepormas/banca/definitions/notifications</directory>
+      <outputDirectory>mx/com/vepormas/banca/definitions/notifications</outputDirectory>
+      <includes>
+      	<include>**/**.class</include>
+      </includes>
+    </fileSet>
+    <fileSet>
+      <directory>target/classes/mx/com/vepormas/banca/schemas</directory>
+      <outputDirectory>mx/com/vepormas/banca/schemas</outputDirectory>
+      <excludes>
+      	<exclude>/base/**</exclude>
+      </excludes>
+    </fileSet>
+    <fileSet>
+      <directory>target/classes/mx/com/vepormas/banca/schemas/generanotificaciones</directory>
+      <outputDirectory>mx/com/vepormas/banca/schemas/generanotificaciones</outputDirectory>
+      <includes>
+      	<include>**/**.class</include>
+      </includes>
+    </fileSet>
+    
+    <fileSet>
+      <directory>target/classes/org/w3/_2001/xmlschema</directory>
+      <outputDirectory>org/w3/_2001/xmlschema</outputDirectory>
+      <includes>
+      	<include>**/**.class</include>
+      </includes>
+    </fileSet>  
+    	
+  </fileSets>
+</assembly>

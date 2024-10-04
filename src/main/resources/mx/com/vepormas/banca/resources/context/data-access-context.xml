@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:ws="http://www.springframework.org/schema/web-services"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:jee="http://www.springframework.org/schema/jee"
+	xsi:schemaLocation="http://www.springframework.org/schema/web-services http://www.springframework.org/schema/web-services/web-services-2.0.xsd
+		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-4.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.2.xsd">
+	
+	<context:annotation-config/>
+	
+	
+	<bean id="appProps" class="mx.com.vepormas.lib.resources.impl.ApplicationPropertiesImpl"/>
+	
+	<context:property-placeholder location="classpath:mx/com/vepormas/banca/resources/factory/pooled-factory-config.properties, 
+											classpath:mx/com/vepormas/banca/resources/persistence/persistence-config.properties,
+											classpath:mx/com/vepormas/banca/resources/runtime/application-mail.properties,
+											classpath:mx/com/vepormas/banca/resources/runtime/application-async-scheduler.properties,
+											classpath:mx/com/vepormas/banca/resources/runtime/application-properties.properties" />
+											
+			
+	
+	<!-- Declare a data source into JBoss configuration, and reference it in persistence.properties -->
+	<jee:jndi-lookup expected-type="javax.sql.DataSource" id="dataSource" jndi-name="${jdbc.jdni.name}" />
+	
+	
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean" >
+		<property name="dataSource" ref="dataSource" />
+        <property name="hibernateProperties">
+        	<props>
+        		<prop key="hibernate.dialect">${hibernate.dialect}</prop>
+        		<prop key="hibernate.default_schema">${hibernate.default_schema}</prop>
+        		<prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</prop>
+        		<prop key="hibernate.id.new_generator_mappings">${hibernate.id.new_generator_mappings}</prop>
+        		<prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
+        		<prop key="hibernate.format_sql">${hibernate.format_sql}</prop>
+        		<prop key="hibernate.max_fetch_depth">${hibernate.max_fetch_depth}</prop>
+        	</props>
+		</property>
+		<property name="packagesToScan">
+         <array>
+              <value>${hibernate.packagesToScan}</value>
+         </array>
+     	</property> 
+	</bean>
+	
+	<bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	<tx:annotation-driven transaction-manager="transactionManager" />
+	
+	<bean id="notificacionesDAO" class="mx.com.vepormas.banca.notificaciones.dao.impl.NotificacionesDAOImpl">
+		<constructor-arg ref="appProps"/>
+		<constructor-arg ref="sessionFactory"/>
+		<constructor-arg ref="notifWebserviceTemplate"/>
+	</bean>
+	
+	<bean id="smsDAO" class="mx.com.vepormas.banca.notificaciones.dao.impl.SMSDAOImpl">
+		<constructor-arg ref="appProps"/>
+		<constructor-arg ref="notifWebserviceTemplate"/>
+	</bean>
+	
+	<bean name="notifWebserviceTemplate" class="org.springframework.ws.client.core.WebServiceTemplate">
+		<property name="marshaller" ref="notifJaxb2Marshaller" />
+		<property name="unmarshaller" ref="notifJaxb2Marshaller" />
+	</bean>
+
+	<bean id="notifJaxb2Marshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller" >
+		<property name="contextPaths">
+			<list>
+				<value>mx.com.vepormas.banca.notificaciones.wscli.user.information.vpmemailtelnotif</value>
+				<value>mx.com.vepormas.banca.notificaciones.wscli.user.information.ws_vpm_email_tel</value>
+				<value>mx.com.vepormas.banca.notificaciones.wscli.user.information.wseauthtoken</value>
+				<value>mx.com.vepormas.banca.notificaciones.bean</value>
+				<value>mx.com.vepormas.banca.notificaciones.bean.wscli</value>
+				<value>mx.com.vepormas.banca.notificaciones.bean.wscli.base</value>
+			</list>
+		</property>
+	</bean>
+
+</beans>

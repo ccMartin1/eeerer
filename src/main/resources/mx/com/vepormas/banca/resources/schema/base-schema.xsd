@@ -1,0 +1,64 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+	xmlns:schema="http://vepormas.com.mx/banca/schemas/base" targetNamespace="http://vepormas.com.mx/banca/schemas/base" elementFormDefault="qualified">
+	
+	<xs:complexType name="Request">
+		<xs:sequence>
+			<xs:element name="subject" type="schema:Subject" minOccurs="0" nillable="true" />
+			<xs:element name="session" type="schema:Session" />
+			<!-- Map data element in the schema definition as part of the endpoint implementation -->
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="Response">
+		<xs:sequence>
+			<xs:element name="status" type="xs:boolean" />
+			<xs:element name="code" type="xs:int" />
+			<xs:element name="message" type="xs:string" />
+			<!-- Map data element in the schema definition as part of the endpoint implementation -->
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="Subject">
+		<xs:sequence>
+			<xs:element name="principal" type="xs:string" />
+			<xs:element name="credencial" type="xs:string" minOccurs="0" nillable="true" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="Session">
+		<xs:sequence>
+			<xs:element name="userId" type="xs:string" minOccurs="0" nillable="true" />
+			<xs:element name="sessionId" type="xs:string" minOccurs="0" nillable="true" />
+			<xs:element name="channelId" type="xs:string" />
+			<xs:element name="hostName" type="xs:string" />
+			<xs:element name="hostIpAddress" type="xs:string" />
+			<xs:element name="sourceURL" type="xs:string" minOccurs="0" nillable="true" />
+			<xs:element name="customerId" type="xs:string" minOccurs="0" nillable="true" />
+			<xs:element name="userPrincipal" type="xs:string" minOccurs="0" nillable="true" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="TransactionInput">
+		<xs:sequence>
+			<xs:element name="customer" type="schema:Customer" />
+			<xs:element name="token" type="xs:int" minOccurs="0" nillable="true" />
+			<!-- Map info element in the schema definition as part of the endpoint implementation -->
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="TransactionOutput">
+		<xs:sequence>
+			<xs:element name="transactionId" type="xs:string" />
+			<xs:element name="dateTime" type="xs:dateTime" />
+			<!-- Map info element in the schema definition as part of the endpoint implementation -->
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="Customer">
+		<xs:sequence>
+			<xs:element name="classificationId" type="xs:int" minOccurs="0" nillable="true" />
+			<xs:element name="accountNumber" type="xs:long" />
+		</xs:sequence>
+	</xs:complexType>
+	
+</xs:schema>

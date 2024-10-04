@@ -1,0 +1,10 @@
+<html>
+	<body>
+		<h3>
+			Hello ${clienteID}!!
+		</h3>
+			Your email is ${email}
+			
+		And this is a test template.
+	</body>
+</html>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+	   					http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.2.xsd">
+	
+	<bean id="appProps" class="mx.com.vepormas.lib.resources.impl.ApplicationPropertiesImpl" scope="singleton"/>
+	
+	<!-- Scheduler para envio de correos-->
+<!-- 	<task:annotation-driven executor="asyncExecutor"/> -->
+<!-- 	<task:executor id="asyncExecutor" pool-size="${pool.sise}"  queue-capacity="${queue.capacity}" keep-alive="${keep.alive}"/> -->
+	
+<!-- 	<task:scheduler id="mailScheduler" pool-size="${pool.sise}"/> -->
+<!-- 	<task:scheduled-tasks scheduler="mailScheduler"> -->
+<!--     	<task:scheduled ref="emailSenderBO" method="readAndSendCorreos" fixed-delay="${fixed.delay}"/> -->
+<!-- 	</task:scheduled-tasks> -->
+ 	
+	
+	<bean id="notificacionesBO" class="mx.com.vepormas.banca.notificaciones.business.impl.NotificacionesBOImpl">
+		<constructor-arg ref="appProps"/>
+		<constructor-arg ref="notificacionesDAO"/>
+		<constructor-arg ref="mailSender"/>
+		<constructor-arg ref="smsDAO"/>
+	</bean>	
+	
+	<bean id="emailSenderBO" class="mx.com.vepormas.banca.notificaciones.business.impl.EmailSenderBOImpl">
+		<constructor-arg ref="appProps"/>
+		<constructor-arg ref="notificacionesBO"/>
+	</bean>	
+	
+</beans>

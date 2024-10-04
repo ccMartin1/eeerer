@@ -1,0 +1,14 @@
+<jboss-deployment-structure>
+	<deployment>
+<!-- 			<exclusions> -->
+<!-- 				<module name="org.apache.log4j" /> -->
+<!-- 				<module name="org.jboss.resteasy.resteasy-jackson-provider"/> -->
+<!-- 			</exclusions> -->
+<!-- 			<dependencies> -->
+<!-- 				<module name="org.jboss.resteasy.resteasy-jackson-provider"/> -->
+<!-- 			</dependencies> -->
+<dependencies>
+	<module name="jdk.unsupported"/>
+</dependencies>
+	</deployment>	
+</jboss-deployment-structure>

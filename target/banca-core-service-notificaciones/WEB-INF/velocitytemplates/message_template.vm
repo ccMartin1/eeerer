@@ -1,0 +1,35 @@
+<html>
+	<head>
+		<meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
+		<title>Confirmacion</title>
+		<link rel='stylesheet' href='${servidor}/resources/css/estilo.css'>
+		<style type='text/css'>
+			.into{background:#FFF; color:#666; width:70px; height:18px; border:0; font-family:'Trebuchet MS', Arial, Helvetica, sans-serif; font-size:12px;}
+			.into:hover{color:#F60;}
+		</style>
+	</head>
+	<body>
+	<table>
+	<tr>
+		<td>Nombre</td>
+		<td>${name}</td>
+	</tr>
+	<tr>
+		<td>Telefono</td>
+		<td>${telephone}</td>
+	</tr>
+	<tr>
+		<td>Correo electr&oacute;nico</td>
+		<td>${email}</td>
+	</tr>
+	<tr>
+		<td>Servicio</td>
+		<td>${service}</td>
+	</tr>
+	<tr>
+		<td>Comentario</td>
+		<td>${comment}</td>
+	</tr>
+	</table>
+	</body>
+</html>

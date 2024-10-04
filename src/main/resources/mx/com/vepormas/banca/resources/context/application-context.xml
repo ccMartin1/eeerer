@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:ws="http://www.springframework.org/schema/web-services"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:jee="http://www.springframework.org/schema/jee"
+	xsi:schemaLocation="http://www.springframework.org/schema/web-services http://www.springframework.org/schema/web-services/web-services-2.0.xsd
+		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-4.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.2.xsd">
+	
+	
+	<import resource="data-access-context.xml"/>
+	<import resource="business-context.xml"/>
+	<import resource="mail-context.xml"/>
+	<import resource="web-service-context.xml"/>
+	<import resource="ws-client-context.xml"/>
+	
+	<import resource="../../resources/context/ws-client-context.xml"/>
+	
+	<import resource="classpath:mx/com/vepormas/banca/security/lib/resources/ldap/ldap-context.xml"/>
+
+	<context:annotation-config/>
+	
+</beans>

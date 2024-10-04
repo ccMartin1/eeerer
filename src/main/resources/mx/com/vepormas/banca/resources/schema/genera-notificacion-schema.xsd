@@ -1,0 +1,203 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+	xmlns:base="http://vepormas.com.mx/banca/schemas/base"
+	xmlns:schema="http://vepormas.com.mx/banca/schemas/generanotificaciones" 
+	elementFormDefault="qualified" 
+	targetNamespace="http://vepormas.com.mx/banca/schemas/generanotificaciones">
+	
+	<xs:import schemaLocation="base-schema.xsd" namespace="http://vepormas.com.mx/banca/schemas/base" />
+
+	<!-- OBTENER CATALOGO NOTIFICACIONES -->
+	
+	<xs:element name="GetNotificationCatalogRequest">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="base:Request">
+					<xs:sequence>
+						<xs:element name="data" type="schema:CatNotificationInput" />
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:complexType name="CatNotificationInput">
+		<xs:sequence>
+			<xs:element name="notificationType" type="xs:int"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:element name="GetNotificationCatalogResponse">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="base:Response">
+					<xs:sequence>
+						<xs:element name="data" type="schema:Notification" minOccurs="0" maxOccurs="unbounded" />
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:complexType name="Notification">
+		<xs:sequence>
+			<xs:element name="notificationId" type="xs:string"/>
+			<xs:element name="description" type="xs:string" />
+			<xs:element name="parameters" type="schema:Parameters" minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="Parameters">
+		<xs:sequence>
+			<xs:element name="variableName" minOccurs="0" type="xs:string"/>
+            <xs:element name="descripcion" minOccurs="0" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!-- OBTIENE INFORMACION DEL USUARIO PARA NOTIFICACION-->
+
+	<xs:element name="GetUserInformationForNotificationRequest">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="base:Request">
+					<xs:sequence>
+						<xs:element name="data" type="schema:ClientInformationInput" />
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="GetUserInformationForNotificationResponse">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="base:Response">
+					<xs:sequence>
+						<xs:element name="data" type="schema:UserInformationOutput" />
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:complexType name="UserInformationOutput">
+		<xs:sequence>
+        	<xs:element name="email" type="xs:string"/>
+        	<xs:element name="telephone" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!-- ENVIA NOTIFICACION  -->
+
+	<xs:element name="SendNotificationRequest">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="base:Request">
+					<xs:sequence>
+						<xs:element name="data" type="schema:SendNotificationInput" />
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="SendNotificationAndAttachmentsRequest">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="base:Request">
+					<xs:sequence>
+						<xs:element name="data" type="schema:SendNotificationInput" />
+						<xs:element name="attachments" type="schema:AttachmentsInput"  minOccurs="1" maxOccurs="unbounded" />
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="SendSMSRequest">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="base:Request">
+					<xs:sequence>
+						<xs:element name="data" type="schema:SendSMSInput" />
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:complexType name="AttachmentsInput">
+		<xs:sequence>
+			<xs:element name="attachment" type="xs:base64Binary"/>
+			<xs:element name="description" type="xs:string" />
+			<xs:element name="fileName" type="xs:string" />
+			<xs:element name="extension" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="SendSMSInput">
+		<xs:sequence>
+			<xs:element name="phoneNumber" type="xs:string" />
+			<xs:element name="notificationId" type="xs:string" />
+			<xs:element name="parameters" type="schema:ParametersInput"  minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+
+
+	<xs:complexType name="SendNotificationInput">
+		<xs:sequence>
+			<xs:element name="email" type="xs:string" />
+			<xs:element name="notificationId" type="xs:string" />
+			<xs:element name="parameters" type="schema:ParametersInput"  minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="ParametersInput">
+		<xs:sequence>
+			<xs:element name="key" minOccurs="0" type="xs:string"/>
+            <xs:element name="value" minOccurs="0" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!-- ENVIAR COMENTARIO -->
+	
+	<xs:element name="SendCommentRequest">
+    	<xs:complexType>
+        	<xs:complexContent>
+            	<xs:extension base="base:Request">
+                	<xs:sequence>
+                	   	<xs:element name="data" type="schema:SendCommentDataInput" />
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:complexType name="SendCommentDataInput">
+		<xs:sequence>
+			<xs:element name="name" type="xs:string"/>
+			<xs:element name="telephone" type="xs:string"/>
+			<xs:element name="email" type="xs:string"/>
+			<xs:element name="service" type="xs:string"/>
+			<xs:element name="comment" type="xs:string"/>                          
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:element name="ExecuteSendPendingMailRequest">
+    	<xs:complexType>
+        	<xs:complexContent>
+            	<xs:extension base="base:Request">
+                	<xs:sequence>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:complexType name="ClientInformationInput">
+		<xs:sequence>
+			<xs:element name="userIdCore" type="xs:string"/>
+			<xs:element name="clientIdCore" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+</xs:schema>
